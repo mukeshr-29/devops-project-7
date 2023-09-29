@@ -11,7 +11,7 @@ pipeline{
         DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-        jenkins-api = credentials("jenkins-api")
+        JENKINS_API_TOKEN = credentials("jenkins-api")
     }
     stages{
         stage("cleanup workspace"){
