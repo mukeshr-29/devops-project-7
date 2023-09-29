@@ -11,6 +11,7 @@ pipeline{
         DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        jenkins-api = credentials("jenkins-api")
     }
     stages{
         stage("cleanup workspace"){
@@ -74,6 +75,13 @@ pipeline{
                 script{
                     sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+        stage("trigger cd pipeline"){
+            steps{
+                script{
+                    sh "curl -v -k --user mukesh:${jenkins-api} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://54.211.82.54:8080/job/gitops-project-7/buildWithParameters?token=gitops-token'"
                 }
             }
         }
