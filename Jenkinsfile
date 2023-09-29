@@ -81,7 +81,7 @@ pipeline{
         stage("trigger cd pipeline"){
             steps{
                 script{
-                    sh "curl -v -k --user mukesh:${jenkins-api} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://54.211.82.54:8080/job/gitops-project-7/buildWithParameters?token=gitops-token'"
+                    sh "curl -v -k --user mukesh:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://54.211.82.54:8080/job/gitops-project-7/buildWithParameters?token=gitops-token'"
                 }
             }
         }
