@@ -62,5 +62,20 @@ pipeline{
                 }
             }
         }
+        stage("Trivy scan"){
+            steps{
+                script{
+                    sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image mukeshr29/devops-project-7:latest --no-progress --scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table')
+                }
+            }
+        }
+        stage("cleanup artifact"){
+            steps{
+                script{
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
     }
 }
