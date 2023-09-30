@@ -78,6 +78,13 @@ pipeline{
                 }
             }
         }
+        stage("memory clean up"){
+            steps{
+                script{
+                    sh "docker system prune -y"
+                }
+            }
+        }
         stage("trigger cd pipeline"){
             steps{
                 script{
