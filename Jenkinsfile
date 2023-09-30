@@ -81,7 +81,7 @@ pipeline{
         stage("memory clean up"){
             steps{
                 script{
-                    sh "docker system prune -y"
+                    sh "docker system prune"
                 }
             }
         }
